@@ -28,11 +28,6 @@ if &filetype == 'javascript'
 	setlocal iskeyword+=$
 endif
 
-"" Remove dollar sign from identifier when embedded in a PHP file
-if &filetype == 'php'
-	setlocal iskeyword-=$
-endif
-
 syntax sync fromstart
 
 "" syntax coloring for Node.js shebang line
