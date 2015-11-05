@@ -67,8 +67,7 @@ if !exists("javascript_ignore_javaScriptdoc")
 	"unlet b:current_syntax
 
 	syntax region javaScriptDocComment        matchgroup=javaScriptComment start="/\*\*\s*$"  end="\*/" contains=javaScriptDocTags,javaScriptCommentTodo,@javaScriptHtml,jsInJsdocExample,@Spell fold
-	syntax match  javaScriptDocTags           contained "@\(param\|argument\|returns\=\|requires\|exception\|throws\|type\|class\|extends\|see\|link\|member\|module\|method\|title\|namespace\|name\|memberof\|exports\|callback\|typedef\|property\|optional\|default\|base\|file\|mixes\|mixin\|alias\|const\|enum\|fires\|event\|readonly\|tutorial\)\>" nextgroup=javaScriptDocParam,javaScriptDocSeeTag skipwhite
-	syntax match  javaScriptDocTags           contained "@\(beta\|deprecated\|description\|fileoverview\|author\|license\|version\|constructor\|private\|protected\|final\|ignore\|addon\|exec\)\>"
+	syntax match  javaScriptDocTags           contained "@\(abstract\|access\|alias\|arg\|argument\|augments\|author\|borrows\|callback\|class\|classdesc\|const\|constant\|constructor\|constructs\|copyright\|default\|defaultvalue\|deprecated\|desc\|description\|emits\|enum\|event\|example\|exception\|exports\|extends\|external\|file\|fileoverview\|fires\|func\|function\|global\|host\|ignore\|implements\|inheritdoc\|inner\|instance\|interface\|kind\|lends\|license\|link\|linkcode\|linkplain\|listens\|member\|memberof\|method\|mixes\|mixin\|module\|name\|namespace\|override\|overview\|param\|private\|prop\|property\|protected\|public\|readonly\|requires\|return\|returns\|see\|since\|static\|summary\|this\|throws\|todo\|tutorial\|tutorial\|type\|typedef\|var\|variation\|version\|virtual\)\>" nextgroup=javaScriptDocParam,javaScriptDocSeeTag skipwhite
 	syntax match  javaScriptDocParam          contained "\%(#\|\w\|\.\|:\|\/\)\+"
 	syntax region javaScriptDocSeeTag         contained matchgroup=javaScriptDocSeeTag start="{" end="}" contains=javaScriptDocTags
 
@@ -174,6 +173,8 @@ syntax match   javaScriptFuncArg         "\(([^()]*)\)" contains=javaScriptParen
 syntax match   javaScriptFuncComma       /,/ contained
 syntax match   javaScriptFuncEq          /=/ contained
 syntax region  javaScriptFuncDef         start="\<function\>" end="\([^)]*\)" contains=javaScriptFuncKeyword,javaScriptFuncArg keepend
+syntax match   javaScriptObjectKey       /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>\(\s*:\)\@=/ contains=javaScriptFunctionKey
+syntax match   javaScriptFunctionKey     /\<[a-zA-Z_$][0-9a-zA-Z_$]*\>\(\s*:\s*function\s*\)\@=/ contained
 "}}}
 " Braces, Parens, symbols, colons {{{
 syntax match javaScriptBraces       "[{}\[\]]"
@@ -181,6 +182,11 @@ syntax match javaScriptParens       "[()]"
 syntax match javaScriptOpSymbols    "=\{1,3}\|!==\|!=\|<\|>\|>=\|<=\|++\|+=\|--\|-="
 syntax match javaScriptEndColons    "[;,]"
 syntax match javaScriptLogicSymbols "\(&&\)\|\(||\)"
+"}}}
+" ES6 String Interpolation
+syntax match  javaScriptTemplateDelim    "\${\|}" contained
+syntax region javaScriptTemplateVar      start=+${+ end=+}+                        contains=javaScriptTemplateDelim keepend
+syntax region javaScriptTemplateString   start=+`+  skip=+\\\(`\|$\)+  end=+`+     contains=javaScriptTemplateVar,javaScriptSpecial keepend
 "}}}
 " JavaScriptFold Function {{{
 
